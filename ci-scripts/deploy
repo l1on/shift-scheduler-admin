@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+sh ci-scripts/trigger-deployment.sh l1on shift-scheduler-deployment $TRAVIS_ACCESS_TOKEN
