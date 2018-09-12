@@ -1,0 +1,10 @@
+node_modules/
+test/
+README.md
+Dockerfile
+.dockerignore
+.gitignore
+.travis.yml
+.env
+.git
+docker-image-build/

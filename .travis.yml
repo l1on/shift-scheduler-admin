@@ -1,0 +1,20 @@
+sudo: required
+language: node_js
+node_js:
+- node
+services:
+- docker
+script: docker-image-build/pipeline
+notifications:
+  slack:
+    secure: GXa62Sshsb+dyx+nMmfIfr7d1NW/e5TQcWu3urpyCI5yt4U3Vsxyq/kQrzSXkJh4UjjGX3XX3N4GVIvHwfVloxkPXJ7UjWOYYpxre55uM18m/wKxKf1bamnYBE8+bKkBxjKb3Le5BoWaKljfuOoDZO1F/yJjRInMQrbLgXX3qH8gk+PyKBvnLgQsf+Rf09iBrIE+7gy2nLYryss9ojsY6T3uu0Hw9Yyqu5m5pdqPi1d6rig1H4wWx+8+7MeCIO9KOgDv3ACm9K1Z/sqIqwlHc/3xuVnEKwwyuJ60QES+uBowDeNAR/WH+6UAMj+GuK2vpCaUlRTEP1XrcK0OJdQtv1wkUfG+FnU0DuCIyU8bctBW4BAENV3VooJwygYube9d7uf7Ca0zUwH/kB/PB1cmOXkT3N7+0+okxiuF3CXuTWIXM/nKEGxzD3xHq3WNbv+uUmDKbbXwGnfXRVRnEFIGEWwLS4YgyJ5BEX7AcZGP4wi3RkPZTMul9zCYvp8sC9c3SQnqnda9MY6CS5Mwem9lJ7GCbllMKvAyadj1fy43qjVYjF6duMxcPbPCWF6J/b4VAHyto+b06VuZsoAiRyOScdHLUapn+Iaz+gXGu55G+jF7vMj8Run5sCyx4ltYOVOhrk2R4oRfuvK+kjMzuHkRgK0g1yXVjT7Nb1ridGY7/Uw=
+jobs:
+   include:
+     - stage: trigger downstream
+       jdk: oraclejdk8
+       script: |
+         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+         if [[ ($TRAVIS_BRANCH == master) &&
+               ($TRAVIS_PULL_REQUEST == false) ]] ; then
+           sh docker-image-build/scripts/trigger-travis.sh l1on shift-scheduler-deployment $TRAVIS_ACCESS_TOKEN
+         fi

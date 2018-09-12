@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+docker-image-build/scripts/test
+
+docker-image-build/scripts/push_image
+

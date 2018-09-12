@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+readonly IMAGE_NAMESPACE='iluvzhouying'
+readonly IMAGE_NAME='shift-scheduler-admin' 
+readonly IMAGE="${IMAGE_NAMESPACE}/${IMAGE_NAME}:$(git log -1 --pretty=%h)"
+
+docker build -t ${IMAGE} . 
+
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
+
+docker push ${IMAGE}
