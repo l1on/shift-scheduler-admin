@@ -7,4 +7,4 @@ Dockerfile
 .travis.yml
 .env
 .git
-docker-image-build/
+ci-scripts/
