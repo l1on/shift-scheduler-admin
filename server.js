@@ -46,6 +46,7 @@ app.get('/admin/employees', (req, res) => {
 app.get('/admin/employees/:id', (req, res) => {
     const end_timer = histogram.startTimer({method: 'GET', handler: '/admin'});
     res.json(employees[req.params.id - 1]);
+    // TODO : return 404 when id out of range
     end_timer();
 });
 
